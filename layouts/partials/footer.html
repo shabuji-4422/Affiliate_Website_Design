@@ -1,0 +1,11 @@
+<footer class="site-footer">
+  <div class="wrap">
+    <p class="footer-disclosure">{{ site.Params.disclosure }} Prices and availability change often; check Amazon for the current price.</p>
+    <nav class="footer-nav" aria-label="Footer">
+      {{- range site.Menus.footer }}
+      <a href="{{ .URL | relURL }}">{{ .Name }}</a>
+      {{- end }}
+    </nav>
+    <p class="copyright">© {{ now.Year }} {{ site.Title }}. Amazon and the Amazon logo are trademarks of Amazon.com, Inc. or its affiliates.</p>
+  </div>
+</footer>

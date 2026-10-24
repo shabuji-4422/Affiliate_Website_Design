@@ -1,0 +1,19 @@
+<header class="site-header">
+  <div class="wrap header-inner">
+    <a class="logo" href="{{ "/" | relURL }}">{{ site.Title }}</a>
+    <nav class="main-nav" aria-label="Main">
+      {{- range site.Menus.main }}
+      <a href="{{ .URL | relURL }}">{{ .Name }}</a>
+      {{- end }}
+    </nav>
+  </div>
+  <div class="dept-bar">
+    <div class="wrap dept-inner">
+      {{- range site.Params.departments }}
+      {{- with site.GetPage (printf "/departments/%s" .) }}
+      <a href="{{ .RelPermalink }}">{{ .Title }}</a>
+      {{- end }}
+      {{- end }}
+    </div>
+  </div>
+</header>

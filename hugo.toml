@@ -1,0 +1,69 @@
+baseURL = "https://example.com/"   # change to your domain, e.g. https://trendfinds.com/
+locale = "en-US"
+title = "TrendFinds"               # change to your site name
+enableRobotsTXT = true
+summaryLength = 30
+
+[taxonomies]
+  department = "departments"       # home-kitchen, tech-gadgets, beauty-self-care, fitness-outdoors, pets
+  collection = "collections"       # trending-this-week, deals, gift-guides
+
+[permalinks]
+  posts = "/:slug/"                # short URLs at the root, e.g. /best-amazon-gifts-under-25/
+
+[params]
+  description = "The trending Amazon products actually worth buying, picked and explained in plain English."
+  # Your Amazon Associates tracking ID. Every product button uses it.
+  amazonTag = "yourtag-20"
+  disclosure = "As an Amazon Associate, I earn from qualifying purchases."
+  # Shown in the footer and on the About page
+  author = "Abir"
+  contactEmail = "hello@example.com"
+
+  # The five departments (their slugs). Display names come from content/departments/<slug>/_index.md
+  departments = ["home-kitchen", "tech-gadgets", "beauty-self-care", "fitness-outdoors", "pets"]
+
+[menus]
+  [[menus.main]]
+    name = "Trending"
+    url = "/collections/trending-this-week/"
+    weight = 1
+  [[menus.main]]
+    name = "Deals"
+    url = "/collections/deals/"
+    weight = 2
+  [[menus.main]]
+    name = "Gift Guides"
+    url = "/collections/gift-guides/"
+    weight = 3
+  [[menus.main]]
+    name = "About"
+    url = "/about/"
+    weight = 4
+
+  [[menus.footer]]
+    name = "About"
+    url = "/about/"
+    weight = 1
+  [[menus.footer]]
+    name = "How We Pick Products"
+    url = "/how-we-pick/"
+    weight = 2
+  [[menus.footer]]
+    name = "Affiliate Disclosure"
+    url = "/affiliate-disclosure/"
+    weight = 3
+  [[menus.footer]]
+    name = "Privacy Policy"
+    url = "/privacy-policy/"
+    weight = 4
+  [[menus.footer]]
+    name = "Contact"
+    url = "/contact/"
+    weight = 5
+
+[markup.goldmark.renderer]
+  unsafe = true
+
+[outputs]
+  home = ["HTML", "RSS"]

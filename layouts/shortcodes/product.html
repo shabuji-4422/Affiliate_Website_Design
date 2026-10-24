@@ -1,0 +1,45 @@
+{{- /*
+  Product card. Usage in a post:
+
+  {{< product name="Product Name" asin="B0XXXXXXX" badge="Best Overall" pros="Pro one|Pro two" cons="Con one" image="/images/product.jpg" >}}
+  Your own description of the product, in Markdown.
+  {{< /product >}}
+
+  - asin:   the 10-character code from the Amazon product URL (amazon.com/dp/ASIN). Preferred.
+  - search: use instead of asin to link to an Amazon search (e.g. search="lego botanical set").
+  - image:  optional. Use your OWN photo or screenshot saved in /static/images. Never copy Amazon's images.
+*/ -}}
+{{- $tag := site.Params.amazonTag -}}
+{{- $url := "" -}}
+{{- with .Get "asin" -}}
+  {{- $url = printf "https://www.amazon.com/dp/%s?tag=%s" . $tag -}}
+{{- else -}}
+  {{- with $.Get "search" -}}
+    {{- $url = printf "https://www.amazon.com/s?k=%s&tag=%s" (urlquery .) $tag -}}
+  {{- end -}}
+{{- end -}}
+<div class="product">
+  {{- with .Get "badge" }}<span class="product-badge">{{ . }}</span>{{ end }}
+  <div class="product-grid">
+    {{- with .Get "image" }}
+    <img class="product-img" src="{{ . | relURL }}" alt="{{ $.Get "name" }}" loading="lazy" width="220" height="220">
+    {{- end }}
+    <div class="product-main">
+      <p class="product-name">{{ .Get "name" }}</p>
+      <div class="product-desc">{{ .Inner | .Page.RenderString (dict "display" "block") }}</div>
+      {{- if or (.Get "pros") (.Get "cons") }}
+      <div class="proscons">
+        {{- with .Get "pros" }}
+        <ul class="pros">{{ range split . "|" }}<li>{{ . | strings.TrimSpace }}</li>{{ end }}</ul>
+        {{- end }}
+        {{- with .Get "cons" }}
+        <ul class="cons">{{ range split . "|" }}<li>{{ . | strings.TrimSpace }}</li>{{ end }}</ul>
+        {{- end }}
+      </div>
+      {{- end }}
+      {{- with $url }}
+      <a class="btn-amazon" href="{{ . }}" target="_blank" rel="sponsored nofollow noopener">Check price on Amazon</a>
+      {{- end }}
+    </div>
+  </div>
+</div>

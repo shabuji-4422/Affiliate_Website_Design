@@ -1,0 +1,38 @@
+{{ define "main" }}
+<article class="post">
+  <header class="post-header">
+    {{- $terms := (.GetTerms "collections") | append (.GetTerms "departments") }}
+    {{- with $terms }}
+    <p class="eyebrow">{{ range $i, $t := . }}{{ if $i }} · {{ end }}<a href="{{ $t.RelPermalink }}">{{ $t.Title }}</a>{{ end }}</p>
+    {{- end }}
+    <h1>{{ .Title }}</h1>
+    {{- if eq .Section "posts" }}
+    <p class="post-meta">By {{ site.Params.author }} · Updated {{ .Lastmod.Format "January 2, 2006" }}</p>
+    {{- end }}
+  </header>
+
+  {{- if eq .Section "posts" }}
+  <aside class="disclosure">
+    <strong>Disclosure:</strong> {{ site.Params.disclosure }} If you buy through our links, we may earn a small commission at no extra cost to you. <a href="{{ "/affiliate-disclosure/" | relURL }}">Learn more</a>.
+  </aside>
+  {{- end }}
+
+  <div class="post-body">
+    {{ .Content }}
+  </div>
+
+  {{- if eq .Section "posts" }}
+  {{- with true }}
+  {{- $related := first 3 (where (where site.RegularPages "Section" "posts") "Permalink" "ne" $.Permalink) }}
+  {{- if $related }}
+  <section class="related">
+    <h2>More finds you might like</h2>
+    <div class="grid">
+      {{- range $related }}{{ partial "card.html" . }}{{ end }}
+    </div>
+  </section>
+  {{- end }}
+  {{- end }}
+  {{- end }}
+</article>
+{{ end }}

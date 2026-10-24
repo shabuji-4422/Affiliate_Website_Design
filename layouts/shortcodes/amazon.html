@@ -1,0 +1,14 @@
+{{- /*
+  Inline Amazon text link. Usage: {{< amazon asin="B0XXXXXXX" >}}link text{{< /amazon >}}
+  or {{< amazon search="cozy throw blanket" >}}link text{{< /amazon >}}
+*/ -}}
+{{- $tag := site.Params.amazonTag -}}
+{{- $url := "" -}}
+{{- with .Get "asin" -}}
+  {{- $url = printf "https://www.amazon.com/dp/%s?tag=%s" . $tag -}}
+{{- else -}}
+  {{- with $.Get "search" -}}
+    {{- $url = printf "https://www.amazon.com/s?k=%s&tag=%s" (urlquery .) $tag -}}
+  {{- end -}}
+{{- end -}}
+<a href="{{ $url }}" target="_blank" rel="sponsored nofollow noopener">{{ .Inner }}</a>

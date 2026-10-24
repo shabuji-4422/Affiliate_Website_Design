@@ -1,0 +1,20 @@
+{{ define "main" }}
+<section class="list-header">
+  <p class="eyebrow">{{ with .Data.Singular }}{{ humanize . }}{{ else }}Browse{{ end }}</p>
+  <h1>{{ .Title }}</h1>
+  {{- with .Description }}<p class="hero-sub">{{ . }}</p>{{ end }}
+  {{- with .Content }}<div class="post-body">{{ . }}</div>{{ end }}
+</section>
+
+{{- if .Pages }}
+<div class="grid">
+  {{- range .Pages.ByLastmod.Reverse }}
+  {{- if .IsPage }}{{ partial "card.html" . }}{{ else }}
+  <article class="card"><a class="card-link" href="{{ .RelPermalink }}"><h3 class="card-title">{{ .Title }}</h3><span class="card-meta">{{ len .Pages }} posts</span></a></article>
+  {{- end }}
+  {{- end }}
+</div>
+{{- else }}
+<p class="empty">Nothing here yet. New posts are added every week.</p>
+{{- end }}
+{{ end }}

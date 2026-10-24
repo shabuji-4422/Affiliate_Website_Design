@@ -1,0 +1,41 @@
+{{ define "main" }}
+<section class="hero">
+  <p class="eyebrow">Updated every week</p>
+  <h1>The trending Amazon finds actually worth buying</h1>
+  <p class="hero-sub">We sort through what's selling fast on Amazon right now, check real buyer reviews, and only list what holds up.</p>
+  <div class="hero-links">
+    <a class="pill" href="{{ "/collections/trending-this-week/" | relURL }}">Trending this week</a>
+    <a class="pill" href="{{ "/collections/gift-guides/" | relURL }}">Gift guides</a>
+    <a class="pill" href="{{ "/collections/deals/" | relURL }}">Deals</a>
+  </div>
+</section>
+
+{{- $posts := where site.RegularPages "Section" "posts" }}
+
+<section class="block">
+  <h2 class="block-title">Latest finds</h2>
+  {{- if $posts }}
+  <div class="grid">
+    {{- range first 9 $posts.ByLastmod.Reverse }}
+    {{ partial "card.html" . }}
+    {{- end }}
+  </div>
+  {{- else }}
+  <p>New posts are on the way.</p>
+  {{- end }}
+</section>
+
+<section class="block">
+  <h2 class="block-title">Shop by department</h2>
+  <div class="dept-grid">
+    {{- range site.Params.departments }}
+    {{- with site.GetPage (printf "/departments/%s" .) }}
+    <a class="dept-tile" href="{{ .RelPermalink }}">
+      <span class="dept-name">{{ .Title }}</span>
+      <span class="dept-count">{{ with .Pages }}{{ len . }} {{ cond (eq (len .) 1) "guide" "guides" }}{{ else }}Coming soon{{ end }}</span>
+    </a>
+    {{- end }}
+    {{- end }}
+  </div>
+</section>
+{{ end }}

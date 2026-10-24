@@ -1,0 +1,12 @@
+{{- /*
+  "Quick picks" summary box for the top of a post.
+  Usage:
+  {{< picks >}}
+  - **Best overall:** Product name
+  - **Best budget:** Product name
+  {{< /picks >}}
+*/ -}}
+<div class="picks">
+  <p class="picks-title">{{ or (.Get "title") "Quick picks" }}</p>
+  {{ .Inner | .Page.RenderString (dict "display" "block") }}
+</div>
