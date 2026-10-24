@@ -1,0 +1,12 @@
+{
+  "name": "affiliate-website-design",
+  "private": true,
+  "scripts": {
+    "build": "hugo --minify",
+    "dev": "hugo server"
+  },
+  "devDependencies": {
+    "hugo-extended": "0.168.0",
+    "wrangler": "^4.152.0"
+  }
+}

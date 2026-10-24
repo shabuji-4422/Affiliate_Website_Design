@@ -1,0 +1,13 @@
+{
+  // Cloudflare Worker that serves the Hugo site as static files.
+  // Cloudflare runs `npx wrangler deploy`, which first runs the build below.
+  "name": "affiliate-website-design",
+  "compatibility_date": "2026-10-01",
+  "build": {
+    "command": "npm run build"
+  },
+  "assets": {
+    "directory": "./public",
+    "not_found_handling": "404-page"
+  }
+}
