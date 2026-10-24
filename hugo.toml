@@ -1,4 +1,4 @@
-baseURL = "https://example.com/"   # change to your domain, e.g. https://trendfinds.com/
+baseURL = "https://affiliate-website-design.sharampura.workers.dev/"   # change to your own domain later, e.g. https://trendfinds.com/
 locale = "en-US"
 title = "TrendFinds"               # change to your site name
 enableRobotsTXT = true
