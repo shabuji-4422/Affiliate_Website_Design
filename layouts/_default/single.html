@@ -1,37 +1,41 @@
 {{ define "main" }}
+{{- $isPost := eq .Section "posts" }}
 <article class="post">
-  <header class="post-header">
-    {{- $terms := (.GetTerms "collections") | append (.GetTerms "departments") }}
-    {{- with $terms }}
-    <p class="eyebrow">{{ range $i, $t := . }}{{ if $i }} · {{ end }}<a href="{{ $t.RelPermalink }}">{{ $t.Title }}</a>{{ end }}</p>
-    {{- end }}
-    <h1>{{ .Title }}</h1>
-    {{- if eq .Section "posts" }}
-    <p class="post-meta">By {{ site.Params.author }} · Updated {{ .Lastmod.Format "January 2, 2006" }}</p>
-    {{- end }}
+  <header class="page-head">
+    <div class="wrap wrap-narrow">
+      {{- with (.GetTerms "collections") | append (.GetTerms "departments") }}
+      <p class="post-tags">{{ range . }}<a href="{{ .RelPermalink }}">{{ .Title }}</a>{{ end }}</p>
+      {{- end }}
+      <h1 class="page-title{{ if $isPost }} page-title-long{{ end }}">{{ .Title }}</h1>
+      {{- if $isPost }}
+      <p class="post-meta">By {{ site.Params.author }}, updated {{ .Lastmod.Format "January 2, 2006" }}</p>
+      {{- end }}
+    </div>
   </header>
 
-  {{- if eq .Section "posts" }}
-  <aside class="disclosure">
-    <strong>Disclosure:</strong> {{ site.Params.disclosure }} If you buy through our links, we may earn a small commission at no extra cost to you. <a href="{{ "/affiliate-disclosure/" | relURL }}">Learn more</a>.
-  </aside>
-  {{- end }}
+  <div class="wrap wrap-narrow post-wrap">
+    {{- if $isPost }}
+    <aside class="disclosure">
+      <strong>Disclosure:</strong> {{ site.Params.disclosure }} If you buy through our links, we may earn a small commission at no extra cost to you. <a href="{{ "/affiliate-disclosure/" | relURL }}">Learn more</a>.
+    </aside>
+    {{- end }}
 
-  <div class="post-body">
-    {{ .Content }}
+    <div class="prose">
+      {{ .Content }}
+    </div>
   </div>
 
-  {{- if eq .Section "posts" }}
-  {{- with true }}
-  {{- $related := first 3 (where (where site.RegularPages "Section" "posts") "Permalink" "ne" $.Permalink) }}
+  {{- if $isPost }}
+  {{- $related := first 3 (where (where site.RegularPages "Section" "posts") "Permalink" "ne" .Permalink) }}
   {{- if $related }}
   <section class="related">
-    <h2>More finds you might like</h2>
-    <div class="grid">
-      {{- range $related }}{{ partial "card.html" . }}{{ end }}
+    <div class="wrap">
+      <h2 class="section-title">More finds you might like</h2>
+      <ul class="card-grid">
+        {{- range $related }}<li>{{ partial "card.html" . }}</li>{{ end }}
+      </ul>
     </div>
   </section>
-  {{- end }}
   {{- end }}
   {{- end }}
 </article>

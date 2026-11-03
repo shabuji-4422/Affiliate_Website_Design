@@ -1,6 +1,6 @@
 ---
 title: "Contact"
-description: "Get in touch with TrendFinds."
+description: "Get in touch with NextCart."
 ---
 
 We'd love to hear from you, whether it's a question, a correction, or a product you think we should look at.

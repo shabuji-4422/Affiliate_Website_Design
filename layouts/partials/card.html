@@ -1,8 +1,8 @@
 <article class="card">
-  <a class="card-link" href="{{ .RelPermalink }}">
-    {{- with .GetTerms "departments" }}<span class="card-dept">{{ (index . 0).Title }}</span>{{ else }}{{ with .GetTerms "collections" }}<span class="card-dept">{{ (index . 0).Title }}</span>{{ end }}{{ end }}
-    <h3 class="card-title">{{ .Title }}</h3>
-    <p class="card-summary">{{ or .Description .Summary | plainify | truncate 140 }}</p>
-    <span class="card-meta">Updated {{ .Lastmod.Format "Jan 2, 2006" }}</span>
-  </a>
+  {{- with .GetTerms "departments" | default (.GetTerms "collections") }}
+  <p class="post-tags"><a href="{{ (index . 0).RelPermalink }}">{{ (index . 0).Title }}</a></p>
+  {{- end }}
+  <h3 class="card-title"><a href="{{ .RelPermalink }}">{{ .Title }}</a></h3>
+  <p class="card-summary">{{ or .Description .Summary | plainify | truncate 140 }}</p>
+  <p class="card-meta">Updated {{ .Lastmod.Format "Jan 2, 2006" }}</p>
 </article>

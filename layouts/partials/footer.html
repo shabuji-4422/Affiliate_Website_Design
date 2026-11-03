@@ -1,11 +1,28 @@
 <footer class="site-footer">
-  <div class="wrap">
-    <p class="footer-disclosure">{{ site.Params.disclosure }} Prices and availability change often; check Amazon for the current price.</p>
-    <nav class="footer-nav" aria-label="Footer">
-      {{- range site.Menus.footer }}
-      <a href="{{ .URL | relURL }}">{{ .Name }}</a>
-      {{- end }}
+  <div class="wrap footer-grid">
+    <div class="footer-brand">
+      {{ partial "logo.html" (dict "class" "logo-light") }}
+      <p>{{ site.Params.description }}</p>
+    </div>
+    <nav class="footer-col" aria-label="Categories">
+      <h2>Categories</h2>
+      <ul>
+        {{- range hugo.Data.categories }}
+        <li><a href="{{ printf "/%s/%s/" .taxonomy .key | relURL }}">{{ .name }}</a></li>
+        {{- end }}
+      </ul>
     </nav>
-    <p class="copyright">© {{ now.Year }} {{ site.Title }}. Amazon and the Amazon logo are trademarks of Amazon.com, Inc. or its affiliates.</p>
+    <nav class="footer-col" aria-label="About NextCart">
+      <h2>NextCart</h2>
+      <ul>
+        {{- range site.Menus.footer }}
+        <li><a href="{{ .URL | relURL }}">{{ .Name }}</a></li>
+        {{- end }}
+      </ul>
+    </nav>
+  </div>
+  <div class="wrap footer-legal">
+    <p>{{ site.Params.disclosure }} Prices and availability change often, so check Amazon for the current price.</p>
+    <p>© {{ now.Year }} {{ site.Title }}. Amazon and the Amazon logo are trademarks of Amazon.com, Inc. or its affiliates. Category photos from <a href="https://unsplash.com/license">Unsplash</a>.</p>
   </div>
 </footer>

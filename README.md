@@ -1,4 +1,4 @@
-# TrendFinds — Amazon affiliate site
+# NextCart — Amazon affiliate site
 
 A fast, free-to-host affiliate site built with [Hugo](https://gohugo.io/). The code lives on GitHub; the live site is served free by **Cloudflare Pages** (GitHub Pages does not allow commercial sites).
 
@@ -13,7 +13,7 @@ Open `hugo.toml` and edit:
 | `amazonTag` | Your Amazon Associates tracking ID (e.g. `abir0c-20`) — every product button uses it |
 | `contactEmail` | Your email (also update `content/contact.md`) |
 
-Also replace "TrendFinds" in `content/about.md`, `content/affiliate-disclosure.md` and `content/privacy-policy.md` if you rename the site.
+Also replace "NextCart" in `content/about.md`, `content/affiliate-disclosure.md` and `content/privacy-policy.md` if you rename the site.
 
 ## 2. Deploy free on Cloudflare Pages
 
@@ -29,7 +29,15 @@ Also replace "TrendFinds" in `content/about.md`, `content/affiliate-disclosure.m
 
 From then on, every change you push to GitHub rebuilds the site automatically in about a minute.
 
-## 3. Add a new post
+## 3. Change the home page slideshow and categories
+
+Everything in the slideshow and the category icons comes from `data/categories.yaml`:
+the headline (use `|` to choose the line break), the subline, the photo and its credit.
+To use your own photo, put it in `static/images/` and set `image: /images/your-photo.jpg`.
+
+Brand colors live at the top of `assets/css/main.css`.
+
+## 4. Add a new post
 
 **Easiest (in the browser):** on GitHub, open `content/posts/`, click **Add file → Create new file**, name it `your-post-slug.md`, paste the template from `archetypes/posts.md`, fill it in, and commit. Remove `draft: true` when it's ready to go live.
 

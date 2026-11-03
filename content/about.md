@@ -1,9 +1,9 @@
 ---
-title: "About TrendFinds"
-description: "Who runs TrendFinds and how we choose the Amazon products we recommend."
+title: "About NextCart"
+description: "Who runs NextCart and how we choose the Amazon products we recommend."
 ---
 
-TrendFinds tracks what's selling fast on Amazon and tells you which of those products are actually worth buying. Every week we look at Amazon's best-seller and trending lists, check what's going viral on social media, and then read the recent buyer reviews to see whether the hype holds up.
+NextCart tracks what's selling fast on Amazon and tells you which of those products are actually worth buying. Every week we look at Amazon's best-seller and trending lists, check what's going viral on social media, and then read the recent buyer reviews to see whether the hype holds up.
 
 The site is run by **Abir**, who has been writing tech reviews and buying guides for years. The goal is simple: save you time, and help you skip the products that look great in a 15-second video but disappoint once they arrive.
 

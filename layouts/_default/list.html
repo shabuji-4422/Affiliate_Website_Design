@@ -1,20 +1,46 @@
 {{ define "main" }}
-<section class="list-header">
-  <p class="eyebrow">{{ with .Data.Singular }}{{ humanize . }}{{ else }}Browse{{ end }}</p>
-  <h1>{{ .Title }}</h1>
-  {{- with .Description }}<p class="hero-sub">{{ . }}</p>{{ end }}
-  {{- with .Content }}<div class="post-body">{{ . }}</div>{{ end }}
-</section>
+{{- $key := path.Base (strings.TrimSuffix "/" .RelPermalink) }}
+{{- $cat := index (where hugo.Data.categories "key" $key) 0 }}
 
-{{- if .Pages }}
-<div class="grid">
-  {{- range .Pages.ByLastmod.Reverse }}
-  {{- if .IsPage }}{{ partial "card.html" . }}{{ else }}
-  <article class="card"><a class="card-link" href="{{ .RelPermalink }}"><h3 class="card-title">{{ .Title }}</h3><span class="card-meta">{{ len .Pages }} posts</span></a></article>
+{{- if and $cat (eq .Kind "term") }}
+<section class="band band-page{{ if not $cat.image }} band-noimg{{ end }}">
+  {{ partial "catband.html" (dict "cat" $cat "level" "h1" "link" false "first" true) }}
+  {{- if not $cat.image }}
+  <span class="band-icon" aria-hidden="true">{{ partial "icon.html" $cat.icon }}</span>
   {{- end }}
-  {{- end }}
-</div>
+</section>
 {{- else }}
-<p class="empty">Nothing here yet. New posts are added every week.</p>
+<section class="page-head">
+  <div class="wrap">
+    <h1 class="page-title">{{ .Title }}</h1>
+    {{- with .Description }}<p class="page-sub">{{ . }}</p>{{ end }}
+  </div>
+</section>
 {{- end }}
+
+<section class="list-body">
+  <div class="wrap">
+    {{- with .Content }}<div class="prose">{{ . }}</div>{{ end }}
+    {{- if .Pages }}
+    <p class="list-count">{{ len .Pages }} {{ cond (eq (len .Pages) 1) "guide" "guides" }}</p>
+    <ul class="card-grid">
+      {{- range .Pages.ByLastmod.Reverse }}
+      <li>
+        {{- if .IsPage }}{{ partial "card.html" . }}{{ else }}
+        <article class="card">
+          <h3 class="card-title"><a href="{{ .RelPermalink }}">{{ .Title }}</a></h3>
+          <p class="card-meta">{{ len .Pages }} {{ cond (eq (len .Pages) 1) "guide" "guides" }}</p>
+        </article>
+        {{- end }}
+      </li>
+      {{- end }}
+    </ul>
+    {{- else }}
+    <div class="empty-state">
+      <p>No guides in this category yet. New ones are added every week.</p>
+      <a class="pill pill-ink" href="{{ "/" | relURL }}">See the latest finds</a>
+    </div>
+    {{- end }}
+  </div>
+</section>
 {{ end }}

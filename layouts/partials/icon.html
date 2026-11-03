@@ -1,0 +1,20 @@
+{{- /* Category line icons. Usage: partial "icon.html" "kitchen" */ -}}
+<svg class="icon" viewBox="0 0 48 48" width="48" height="48" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round">
+{{- if eq . "kitchen" }}
+  <path d="M10 22h28v11a7 7 0 0 1-7 7H17a7 7 0 0 1-7-7z"/><path d="M6 22h36"/><path d="M19 16c0-2 2-2 2-4s-2-2-2-4M27 16c0-2 2-2 2-4s-2-2-2-4"/>
+{{- else if eq . "tech" }}
+  <path d="M9 30v-5a15 15 0 0 1 30 0v5"/><rect x="7" y="28" width="8" height="12" rx="3"/><rect x="33" y="28" width="8" height="12" rx="3"/>
+{{- else if eq . "beauty" }}
+  <rect x="15" y="20" width="18" height="21" rx="5"/><path d="M19 20v-5h10v5"/><path d="M22 15V9a2 2 0 0 1 4 0v6"/><path d="M20 29h8"/>
+{{- else if eq . "fitness" }}
+  <path d="M16 24h16"/><rect x="9" y="15" width="7" height="18" rx="2.5"/><rect x="32" y="15" width="7" height="18" rx="2.5"/><path d="M5 21v6M43 21v6"/>
+{{- else if eq . "pets" }}
+  <ellipse cx="24" cy="32" rx="8" ry="6.5"/><circle cx="13" cy="22" r="3.5"/><circle cx="35" cy="22" r="3.5"/><circle cx="19.5" cy="13.5" r="3.5"/><circle cx="28.5" cy="13.5" r="3.5"/>
+{{- else if eq . "gift" }}
+  <rect x="8" y="19" width="32" height="8" rx="2"/><path d="M11 27v12a2 2 0 0 0 2 2h22a2 2 0 0 0 2-2V27"/><path d="M24 19v22"/><path d="M24 19c-3-6-11-8-11-3s8 3 11 3c3 0 11 2 11-3s-8-3-11 3z"/>
+{{- else if eq . "deals" }}
+  <path d="M7 9h15l19 19-13 13L9 22z"/><circle cx="16" cy="17" r="2.5"/><path d="M21 31l9-9"/>
+{{- else if eq . "trending" }}
+  <path d="M6 36l12-12 7 7 15-16"/><path d="M30 15h10v10"/>
+{{- end }}
+</svg>

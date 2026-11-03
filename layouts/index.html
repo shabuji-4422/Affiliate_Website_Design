@@ -1,41 +1,126 @@
 {{ define "main" }}
-<section class="hero">
-  <p class="eyebrow">Updated every week</p>
-  <h1>The trending Amazon finds actually worth buying</h1>
-  <p class="hero-sub">We sort through what's selling fast on Amazon right now, check real buyer reviews, and only list what holds up.</p>
-  <div class="hero-links">
-    <a class="pill" href="{{ "/collections/trending-this-week/" | relURL }}">Trending this week</a>
-    <a class="pill" href="{{ "/collections/gift-guides/" | relURL }}">Gift guides</a>
-    <a class="pill" href="{{ "/collections/deals/" | relURL }}">Deals</a>
+{{- $slides := where hugo.Data.categories "slide" true }}
+{{- $posts := (where site.RegularPages "Section" "posts").ByLastmod.Reverse }}
+
+<h1 class="sr-only">{{ site.Title }}: the trending Amazon finds actually worth buying</h1>
+
+<section class="hero" aria-roledescription="carousel" aria-label="Featured categories" data-carousel>
+  <div class="slides" id="hero-slides" aria-live="off">
+    {{- range $i, $c := $slides }}
+    <article class="slide band{{ if eq $i 0 }} is-active{{ end }}" id="slide-{{ $c.key }}" role="tabpanel" aria-roledescription="slide" aria-label="{{ add $i 1 }} of {{ len $slides }}: {{ $c.name }}"{{ if ne $i 0 }} aria-hidden="true" inert{{ end }}>
+      {{ partial "catband.html" (dict "cat" $c "level" "h2" "link" true "first" (eq $i 0)) }}
+    </article>
+    {{- end }}
+  </div>
+
+  <div class="hero-bar">
+    <div class="wrap hero-bar-inner">
+      <div class="hero-tabs" role="tablist" aria-label="Choose a category">
+        {{- range $i, $c := $slides }}
+        <button class="hero-tab" type="button" role="tab" id="tab-{{ $c.key }}" aria-controls="slide-{{ $c.key }}" aria-selected="{{ if eq $i 0 }}true{{ else }}false{{ end }}" tabindex="{{ if eq $i 0 }}0{{ else }}-1{{ end }}">
+          <span>{{ $c.name }}</span><i class="progress" aria-hidden="true"></i>
+        </button>
+        {{- end }}
+      </div>
+      <div class="hero-controls">
+        <button class="ctrl" type="button" data-prev aria-label="Previous category">
+          <svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true"><path d="M15 5l-7 7 7 7" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+        <button class="ctrl" type="button" data-pause aria-label="Pause slideshow">
+          <svg class="i-pause" viewBox="0 0 24 24" width="22" height="22" aria-hidden="true"><path d="M8 5v14M16 5v14" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"/></svg>
+          <svg class="i-play" viewBox="0 0 24 24" width="22" height="22" aria-hidden="true"><path d="M8 5l11 7-11 7z" fill="currentColor"/></svg>
+        </button>
+        <button class="ctrl" type="button" data-next aria-label="Next category">
+          <svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true"><path d="M9 5l7 7-7 7" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+      </div>
+    </div>
   </div>
 </section>
 
-{{- $posts := where site.RegularPages "Section" "posts" }}
-
-<section class="block">
-  <h2 class="block-title">Latest finds</h2>
-  {{- if $posts }}
-  <div class="grid">
-    {{- range first 9 $posts.ByLastmod.Reverse }}
-    {{ partial "card.html" . }}
-    {{- end }}
+<section class="cats" id="categories" aria-labelledby="cats-title">
+  <div class="wrap">
+    <header class="section-head">
+      <h2 class="section-title" id="cats-title">Browse by category</h2>
+      <p class="section-sub">Pick a category to see every guide we've written for it.</p>
+    </header>
+    <ul class="cat-grid">
+      {{- range hugo.Data.categories }}
+      {{- $term := site.GetPage (printf "/%s/%s" .taxonomy .key) }}
+      {{- $n := 0 }}{{ with $term }}{{ $n = len .Pages }}{{ end }}
+      <li>
+        <a class="cat" href="{{ printf "/%s/%s/" .taxonomy .key | relURL }}">
+          <span class="cat-icon">{{ partial "icon.html" .icon }}</span>
+          <span class="cat-name">{{ .name }}</span>
+          <span class="cat-count">{{ if $n }}{{ $n }} {{ cond (eq $n 1) "guide" "guides" }}{{ else }}Guides coming soon{{ end }}</span>
+        </a>
+      </li>
+      {{- end }}
+    </ul>
   </div>
-  {{- else }}
-  <p>New posts are on the way.</p>
-  {{- end }}
 </section>
 
-<section class="block">
-  <h2 class="block-title">Shop by department</h2>
-  <div class="dept-grid">
-    {{- range site.Params.departments }}
-    {{- with site.GetPage (printf "/departments/%s" .) }}
-    <a class="dept-tile" href="{{ .RelPermalink }}">
-      <span class="dept-name">{{ .Title }}</span>
-      <span class="dept-count">{{ with .Pages }}{{ len . }} {{ cond (eq (len .) 1) "guide" "guides" }}{{ else }}Coming soon{{ end }}</span>
-    </a>
+<section class="latest" aria-labelledby="latest-title">
+  <div class="wrap">
+    <header class="section-head">
+      <h2 class="section-title" id="latest-title">Latest finds</h2>
+      <p class="section-sub">New guides every week, updated when products sell out or slip.</p>
+    </header>
+    {{- with $posts }}
+    <div class="latest-grid{{ if eq (len .) 1 }} is-single{{ end }}">
+      {{- with index . 0 }}
+      <article class="feature">
+        {{- with .GetTerms "collections" | append (.GetTerms "departments") }}
+        <p class="post-tags">{{ range $i, $t := first 2 . }}<a href="{{ $t.RelPermalink }}">{{ $t.Title }}</a>{{ end }}</p>
+        {{- end }}
+        <h3 class="feature-title"><a href="{{ .RelPermalink }}">{{ .Title }}</a></h3>
+        <p class="feature-desc">{{ or .Description .Summary | plainify | truncate 200 }}</p>
+        <a class="pill pill-ink" href="{{ .RelPermalink }}">Read the guide</a>
+      </article>
+      {{- end }}
+      {{- if gt (len .) 1 }}
+      <ol class="post-list">
+        {{- range after 1 (first 6 .) }}
+        <li>{{ partial "card.html" . }}</li>
+        {{- end }}
+      </ol>
+      {{- end }}
+    </div>
+    {{- else }}
+    <p class="empty">The first guides are on their way. Check back this week.</p>
     {{- end }}
-    {{- end }}
+  </div>
+</section>
+
+<section class="method" aria-labelledby="method-title">
+  <div class="wrap">
+    <header class="section-head">
+      <h2 class="section-title" id="method-title">How a product makes the list</h2>
+      <p class="section-sub">Trending doesn't always mean good. Every pick goes through the same four checks.</p>
+    </header>
+    <ol class="steps">
+      <li class="step">
+        <span class="step-dot" aria-hidden="true">1</span>
+        <h3>Spot the trend</h3>
+        <p>We watch Amazon's Movers &amp; Shakers, Best Sellers and what's going viral on social media.</p>
+      </li>
+      <li class="step">
+        <span class="step-dot" aria-hidden="true">2</span>
+        <h3>Read recent reviews</h3>
+        <p>Star ratings hide new problems, so we read the last one to two months of buyer reviews.</p>
+      </li>
+      <li class="step">
+        <span class="step-dot" aria-hidden="true">3</span>
+        <h3>Check the details</h3>
+        <p>Who sells it, how often it's returned, and whether it solves a real problem at its price.</p>
+      </li>
+      <li class="step">
+        <span class="step-dot" aria-hidden="true">4</span>
+        <h3>List it or skip it</h3>
+        <p>Only products that pass every check get a spot, and we swap out anything that slips.</p>
+      </li>
+    </ol>
+    <a class="pill pill-teal" href="{{ "/how-we-pick/" | relURL }}">Read our full method</a>
   </div>
 </section>
 {{ end }}

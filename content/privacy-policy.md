@@ -1,11 +1,11 @@
 ---
 title: "Privacy Policy"
-description: "How TrendFinds handles information about visitors."
+description: "How NextCart handles information about visitors."
 ---
 
 _Last updated: October 24, 2026_
 
-This Privacy Policy explains what information TrendFinds ("we", "us") collects when you visit this website and how it is used.
+This Privacy Policy explains what information NextCart ("we", "us") collects when you visit this website and how it is used.
 
 ### Information we collect
 

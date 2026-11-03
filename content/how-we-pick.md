@@ -3,7 +3,7 @@ title: "How We Pick Products"
 description: "The checks every trending Amazon product must pass before we recommend it."
 ---
 
-Trending doesn't always mean good. Before a product appears on TrendFinds, it has to pass every one of these checks.
+Trending doesn't always mean good. Before a product appears on NextCart, it has to pass every one of these checks.
 
 ### Where we find trends
 

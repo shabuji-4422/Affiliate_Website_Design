@@ -1,9 +1,9 @@
 ---
 title: "Affiliate Disclosure"
-description: "How TrendFinds earns money through the Amazon Associates program."
+description: "How NextCart earns money through the Amazon Associates program."
 ---
 
-TrendFinds is a participant in the Amazon Services LLC Associates Program, an affiliate advertising program designed to provide a means for sites to earn advertising fees by advertising and linking to Amazon.com.
+NextCart is a participant in the Amazon Services LLC Associates Program, an affiliate advertising program designed to provide a means for sites to earn advertising fees by advertising and linking to Amazon.com.
 
 **As an Amazon Associate, I earn from qualifying purchases.**
 

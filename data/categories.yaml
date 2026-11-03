@@ -1,0 +1,87 @@
+# Every category shown on the home page.
+# - slide: true  → appears in the home page slideshow (with its photo)
+# - headline: use "|" to choose where the big headline breaks onto a new line
+# - image: a photo URL, or your own file in static/images (e.g. /images/kitchen.jpg)
+# Photos are free to use under the Unsplash License (https://unsplash.com/license).
+
+- key: home-kitchen
+  taxonomy: departments
+  name: Home & Kitchen
+  headline: "Home &|Kitchen"
+  subline: Clever gadgets, smart storage and cozy upgrades that make everyday cooking and cleaning easier.
+  icon: kitchen
+  slide: true
+  image: https://images.unsplash.com/photo-1746289573063-2bee3bd96667
+  credit: Jakub Żerdzicki
+  creditUrl: https://unsplash.com/photos/coffee-machine-and-cups-on-a-modern-kitchen-counter-fkJFL1P3BGQ
+
+- key: tech-gadgets
+  taxonomy: departments
+  name: Tech & Gadgets
+  headline: "Tech &|Gadgets"
+  subline: Headphones, chargers and desk gear that people keep using long after the first week.
+  icon: tech
+  slide: true
+  image: https://images.unsplash.com/photo-1505740420928-5e560c06d30e
+  credit: C D-X
+  creditUrl: https://unsplash.com/photos/flatlay-photography-of-wireless-headphones-PDX_a_82obo
+
+- key: beauty-self-care
+  taxonomy: departments
+  name: Beauty & Self-Care
+  headline: "Beauty &|Self-Care"
+  subline: Skincare, grooming tools and small luxuries with reviews that hold up past the hype.
+  icon: beauty
+  slide: true
+  image: https://images.unsplash.com/photo-1782034493928-d8410275cfcd
+  credit: Ela De Pure
+  creditUrl: https://unsplash.com/photos/cosmetic-bottles-and-an-open-book-on-a-modern-counter-ODz-Sv9GgNc
+
+- key: fitness-outdoors
+  taxonomy: departments
+  name: Fitness & Outdoors
+  headline: "Fitness &|Outdoors"
+  subline: Home workout gear, trail essentials and recovery tools for staying active without a gym bill.
+  icon: fitness
+  slide: true
+  image: https://images.unsplash.com/photo-1584735935682-2f2b69dff9d2
+  credit: Kelly Sikkema
+  creditUrl: https://unsplash.com/photos/dumbbells-and-resistance-band-workout-IZOAOjvwhaM
+
+- key: pets
+  taxonomy: departments
+  name: Pets
+  headline: "Pets"
+  subline: Toys, grooming tools and everyday gear that dogs, cats and their owners actually love.
+  icon: pets
+  slide: true
+  image: https://images.unsplash.com/photo-1672323471087-3c6c76ebd4c1
+  credit: Ayla Verschueren
+  creditUrl: https://unsplash.com/photos/a-dog-playing-with-toys-on-a-bed-xuKLNbSvovg
+
+- key: gift-guides
+  taxonomy: collections
+  name: Gift Guides
+  headline: "Gift|Guides"
+  subline: Ideas sorted by person, price and occasion, so you find the right gift without endless scrolling.
+  icon: gift
+  slide: true
+  image: https://images.unsplash.com/photo-1707944145479-12755f0434d8
+  credit: Baibhav Kumar
+  creditUrl: https://unsplash.com/photos/mint-green-gift-box-with-roses-LumWaD-gTLQ
+
+- key: deals
+  taxonomy: collections
+  name: Deals
+  headline: "Deals"
+  subline: The best markdowns during Black Friday, Cyber Monday and Prime Day, on products worth buying at full price too.
+  icon: deals
+  slide: false
+
+- key: trending-this-week
+  taxonomy: collections
+  name: Trending This Week
+  headline: "Trending|This Week"
+  subline: What's selling fast on Amazon right now, checked against real buyer reviews.
+  icon: trending
+  slide: false

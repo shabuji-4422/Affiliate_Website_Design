@@ -1,8 +1,13 @@
 {{ define "main" }}
-<section class="list-header">
-  <p class="eyebrow">Page not found</p>
-  <h1>That page doesn't exist</h1>
-  <p class="hero-sub">It may have moved, or the product sold out and we removed it.</p>
-  <p><a class="pill" href="{{ "/" | relURL }}">Back to the latest finds</a></p>
+<section class="page-head">
+  <div class="wrap">
+    <h1 class="page-title">That page doesn't exist</h1>
+    <p class="page-sub">It may have moved, or the product sold out and we removed it.</p>
+  </div>
+</section>
+<section class="list-body">
+  <div class="wrap">
+    <a class="pill pill-ink" href="{{ "/" | relURL }}">Back to the latest finds</a>
+  </div>
 </section>
 {{ end }}

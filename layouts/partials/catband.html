@@ -1,0 +1,32 @@
+{{- /*
+  Category panel + photo, used by the home slideshow and category page headers.
+  Params: cat (category data), level ("h1"/"h2"), link (bool), first (bool, load photo eagerly)
+*/ -}}
+{{- $c := .cat -}}
+{{- $lines := split $c.headline "|" -}}
+{{- with $c.image }}
+<figure class="band-photo">
+  {{- if hasPrefix . "http" }}
+  <img src="{{ . }}?auto=format&fit=crop&w=1400&q=70"
+       srcset="{{ . }}?auto=format&fit=crop&w=800&q=70 800w, {{ . }}?auto=format&fit=crop&w=1400&q=70 1400w, {{ . }}?auto=format&fit=crop&w=2000&q=65 2000w"
+       sizes="(max-width: 820px) 100vw, 64vw" alt="" {{ if $.first }}fetchpriority="high"{{ else }}loading="lazy"{{ end }} decoding="async">
+  {{- else }}
+  <img src="{{ . | relURL }}" alt="" {{ if not $.first }}loading="lazy"{{ end }} decoding="async">
+  {{- end }}
+  {{- with $c.credit }}
+  <figcaption class="credit">Photo: <a href="{{ $c.creditUrl }}" rel="noopener" target="_blank">{{ . }}</a> on Unsplash</figcaption>
+  {{- end }}
+</figure>
+{{- end }}
+<div class="band-panel">
+  <div class="band-copy">
+    {{ printf "<%s class=\"band-title\">" .level | safeHTML }}
+      {{- range $i, $l := $lines }}<span class="line">{{ $l }}{{ if eq $i 0 }}<svg class="glyph" viewBox="0 0 44 14" aria-hidden="true" focusable="false"><path d="M1 7h3M7 7h3M13 7h3M19 7h6" stroke="currentColor" stroke-width="3"/><path d="M24 2.5l5.5 4.5-5.5 4.5" fill="none" stroke="currentColor" stroke-width="3" stroke-linejoin="round"/><path d="M35 7h8" stroke="currentColor" stroke-width="3"/></svg>{{ end }}</span>{{ end -}}
+    {{ printf "</%s>" .level | safeHTML }}
+    <p class="band-sub">{{ $c.subline }}</p>
+    {{- if .link }}
+    <a class="pill pill-ink" href="{{ printf "/%s/%s/" $c.taxonomy $c.key | relURL }}">See {{ $c.name }} picks</a>
+    {{- end }}
+    <span class="route" aria-hidden="true"><i class="r1"></i><i class="r2"></i><i class="r3"></i></span>
+  </div>
+</div>
