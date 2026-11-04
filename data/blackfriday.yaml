@@ -1,0 +1,52 @@
+# Black Friday banner slide on the home page.
+# Products were listed as early Amazon Black Friday deals in early November 2026.
+# Deals change daily: check each one on Amazon before you promote it, and swap out any that end.
+# - asin: the 10-character code from the Amazon URL (amazon.com/dp/ASIN)
+# - icon: kitchen, tech, beauty, fitness, pets, gift, deals, trending, mic, scooter, tools, home,
+#         pan, grill, bake, drill, level, bed, flame
+# - image: optional. Only use an image URL you got from Amazon's Creators API (see README).
+headline: "Black|Friday"
+subline: Early deals are live on Amazon. Ten picks we'd grab before they sell out.
+link: /collections/black-friday/
+linkText: See all Black Friday picks
+products:
+  - name: FlexFusion Air Styler & Straightener
+    brand: Shark
+    asin: B0F9PZ6SM4
+    icon: beauty
+  - name: Ninebot F3 Electric Scooter
+    brand: Segway
+    asin: B0DZ1P8M85
+    icon: scooter
+  - name: MV7+ USB-C & XLR Podcast Mic
+    brand: Shure
+    asin: B0CTJ8BSWN
+    icon: mic
+  - name: HA1 Expert Nonstick 10" & 12" Fry Pans
+    brand: All-Clad
+    asin: B0FSDSF9XV
+    icon: pan
+  - name: Smoque 22" Pellet Smoker
+    brand: Weber
+    asin: B0FM9MGFFF
+    icon: grill
+  - name: OvenBond 7-Piece Tri-Ply Bakeware
+    brand: Hestan Provisions
+    asin: B0F3JYGV6L
+    icon: bake
+  - name: 20V Max Brushless Drill Kit
+    brand: Black+Decker
+    asin: B0GXG3D93Z
+    icon: drill
+  - name: Self-Leveling Cross-Line Laser Level
+    brand: Klein Tools
+    asin: B0CNDD5BVY
+    icon: level
+  - name: Cooling Gel Memory Foam Topper, Twin XL
+    brand: Sweetcrispy
+    asin: B0H8NYZCXR
+    icon: bed
+  - name: 50" Recessed Electric Fireplace
+    brand: Antarctic Star
+    asin: B07XKSRQW8
+    icon: flame

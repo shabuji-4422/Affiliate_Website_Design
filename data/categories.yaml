@@ -4,6 +4,14 @@
 # - image: a photo URL, or your own file in static/images (e.g. /images/kitchen.jpg)
 # Photos are free to use under the Unsplash License (https://unsplash.com/license).
 
+- key: black-friday
+  taxonomy: collections
+  name: Black Friday
+  headline: "Black|Friday"
+  subline: Only Black Friday deals, checked against real reviews, so you know which discounts are worth it.
+  icon: blackfriday
+  slide: false
+
 - key: home-kitchen
   taxonomy: departments
   name: Home & Kitchen

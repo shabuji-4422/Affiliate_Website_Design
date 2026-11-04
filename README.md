@@ -37,6 +37,12 @@ To use your own photo, put it in `static/images/` and set `image: /images/your-p
 
 Brand colors live at the top of `assets/css/main.css`.
 
+The Black Friday banner slide (the first slide) comes from `data/blackfriday.yaml`. Deals change daily, so check each product on Amazon and swap out any that end.
+
+### Product pictures
+
+Amazon only allows affiliates to show product images that come from its **Creators API** (the replacement for PA-API). Copying, screenshotting or hotlinking images from Amazon product pages breaks the Associates agreement and can get the account closed. Once your account has API access (final approval plus 10 qualifying sales in the last 30 days), add the image URL the API returns as `image="..."` on a product card, or `image:` in `data/blackfriday.yaml`, and it will show on a white background.
+
 ## 4. Add a new post
 
 **Easiest (in the browser):** on GitHub, open `content/posts/`, click **Add file → Create new file**, name it `your-post-slug.md`, paste the template from `archetypes/posts.md`, fill it in, and commit. Remove `draft: true` when it's ready to go live.

@@ -1,4 +1,4 @@
-// NextCart: mobile menu + home page category slideshow
+// NextCart: mobile menu + home page slideshow
 (function () {
   // Mobile menu
   var toggle = document.querySelector('.menu-toggle');
@@ -11,25 +11,34 @@
     });
   }
 
-  // Slideshow
+  // Slideshow: each photo zooms out for 4 seconds, then the next slide slides in
   var root = document.querySelector('[data-carousel]');
   if (!root) return;
   var slides = Array.prototype.slice.call(root.querySelectorAll('.slide'));
   var tabs = Array.prototype.slice.call(root.querySelectorAll('.hero-tab'));
-  var pauseBtn = root.querySelector('[data-pause]');
   if (slides.length < 2) return;
 
-  var INTERVAL = 6500;
+  var INTERVAL = 4000;
+  var SLIDE_MS = 800;
   var reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   var current = 0;
   var timer = null;
-  var userPaused = reduceMotion; // no autoplay when the visitor prefers less motion
-  var hoverPaused = false;
+  var leaveTimer = null;
+  var held = false; // paused while a keyboard user is in the slideshow or the browser tab is hidden
 
   root.style.setProperty('--interval', INTERVAL + 'ms');
+  root.style.setProperty('--slide-ms', SLIDE_MS + 'ms');
 
   function show(index, moveFocus) {
-    current = (index + slides.length) % slides.length;
+    var next = (index + slides.length) % slides.length;
+    if (next !== current) {
+      var prev = slides[current];
+      slides.forEach(function (s) { s.classList.remove('is-leaving'); });
+      prev.classList.add('is-leaving');
+      clearTimeout(leaveTimer);
+      leaveTimer = setTimeout(function () { prev.classList.remove('is-leaving'); }, SLIDE_MS + 50);
+    }
+    current = next;
     slides.forEach(function (s, i) {
       var on = i === current;
       s.classList.toggle('is-active', on);
@@ -40,26 +49,27 @@
       var on = i === current;
       t.setAttribute('aria-selected', String(on));
       t.tabIndex = on ? 0 : -1;
-      // restart the progress bar animation
       t.classList.remove('is-running');
-      if (on && isPlaying()) { void t.offsetWidth; t.classList.add('is-running'); }
+      if (on && playing()) { void t.offsetWidth; t.classList.add('is-running'); }
     });
     if (moveFocus) tabs[current].focus();
     schedule();
   }
 
-  function isPlaying() { return !userPaused && !hoverPaused; }
+  function playing() { return !reduceMotion && !held; }
 
   function schedule() {
     clearTimeout(timer);
-    if (isPlaying()) timer = setTimeout(function () { show(current + 1); }, INTERVAL);
+    if (playing()) timer = setTimeout(function () { show(current + 1); }, INTERVAL);
   }
 
-  function setPaused(paused) {
-    userPaused = paused;
-    root.classList.toggle('is-paused', paused);
-    pauseBtn.setAttribute('aria-label', paused ? 'Play slideshow' : 'Pause slideshow');
-    show(current);
+  function hold(on) {
+    if (held === on) return;
+    held = on;
+    root.classList.toggle('is-holding', on);
+    tabs.forEach(function (t) { t.classList.toggle('is-running', false); });
+    if (!on && tabs[current] && playing()) { void tabs[current].offsetWidth; tabs[current].classList.add('is-running'); }
+    schedule();
   }
 
   tabs.forEach(function (t, i) {
@@ -71,24 +81,16 @@
       if (e.key === 'End') { e.preventDefault(); show(slides.length - 1, true); }
     });
   });
-  root.querySelector('[data-prev]').addEventListener('click', function () { show(current - 1); });
-  root.querySelector('[data-next]').addEventListener('click', function () { show(current + 1); });
-  pauseBtn.addEventListener('click', function () { setPaused(!userPaused); });
 
-  // Pause while the visitor is reading or using the slideshow
-  root.addEventListener('mouseenter', function () { hoverPaused = true; show(current); });
-  root.addEventListener('mouseleave', function () { hoverPaused = false; show(current); });
-  root.addEventListener('focusin', function () { hoverPaused = true; show(current); });
-  root.addEventListener('focusout', function (e) {
-    if (!root.contains(e.relatedTarget)) { hoverPaused = false; show(current); }
-  });
-  document.addEventListener('visibilitychange', function () {
-    hoverPaused = document.hidden; show(current);
-  });
+  root.addEventListener('focusin', function () { hold(true); });
+  root.addEventListener('focusout', function (e) { if (!root.contains(e.relatedTarget)) hold(false); });
+  document.addEventListener('visibilitychange', function () { hold(document.hidden); });
 
-  // Swipe on touch screens
+  // Swipe on touch screens (but let the Black Friday product strip scroll sideways)
   var startX = null;
-  root.addEventListener('touchstart', function (e) { startX = e.touches[0].clientX; }, { passive: true });
+  root.addEventListener('touchstart', function (e) {
+    startX = e.target.closest('.bf-grid') ? null : e.touches[0].clientX;
+  }, { passive: true });
   root.addEventListener('touchend', function (e) {
     if (startX === null) return;
     var dx = e.changedTouches[0].clientX - startX;
@@ -97,5 +99,5 @@
   });
 
   root.classList.add('is-ready');
-  setPaused(userPaused);
+  show(0);
 })();

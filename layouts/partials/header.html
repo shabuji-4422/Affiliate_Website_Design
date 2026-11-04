@@ -9,7 +9,8 @@
     <nav class="site-menu" id="site-menu" aria-label="Main">
       <ul class="menu-main">
         {{- range site.Menus.main }}
-        <li><a href="{{ .URL | relURL }}">{{ .Name }}</a></li>
+        {{- $here := eq (.URL | relURL) $.RelPermalink }}
+        <li><a href="{{ .URL | relURL }}"{{ if $here }} aria-current="page"{{ end }}>{{ .Name }}</a></li>
         {{- end }}
       </ul>
       <ul class="menu-cats">
