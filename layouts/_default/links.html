@@ -1,0 +1,41 @@
+{{- /* Link-in-bio page for Instagram, TikTok and YouTube: /links/ */ -}}
+{{- $posts := (where site.RegularPages "Section" "posts").ByLastmod.Reverse -}}
+<!doctype html>
+<html lang="{{ site.Language.Locale }}">
+<head>
+  {{ partial "head.html" . }}
+  <meta name="robots" content="noindex">
+</head>
+<body class="is-links">
+  <main class="links-page" id="main">
+    <header class="links-head">
+      {{ partial "logo.html" (dict "class" "") }}
+      <p>The trending Amazon finds actually worth buying, checked against real reviews.</p>
+    </header>
+
+    <a class="links-feature" href="{{ "/collections/black-friday/" | relURL }}">
+      <span class="links-feature-icon">{{ partial "icon.html" "blackfriday" }}</span>
+      <span><strong>Black Friday deals</strong><span>Our picks from Amazon's sale, updated as deals change</span></span>
+    </a>
+
+    {{- with first 6 $posts }}
+    <h2 class="links-title">Latest picks</h2>
+    <ul class="links-list">
+      {{- range . }}
+      <li><a href="{{ .RelPermalink }}">{{ .Title }}</a></li>
+      {{- end }}
+    </ul>
+    {{- end }}
+
+    <h2 class="links-title">Browse by category</h2>
+    <ul class="links-cats">
+      {{- range hugo.Data.categories }}
+      <li><a href="{{ printf "/%s/%s/" .taxonomy .key | relURL }}">{{ partial "icon.html" .icon }}<span>{{ .name }}</span></a></li>
+      {{- end }}
+    </ul>
+
+    <a class="pill pill-ink links-home" href="{{ "/" | relURL }}">Visit the NextCart website</a>
+    <p class="links-legal">{{ site.Params.disclosure }}</p>
+  </main>
+</body>
+</html>
