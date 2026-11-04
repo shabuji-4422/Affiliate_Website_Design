@@ -1,4 +1,4 @@
-baseURL = "https://affiliate-website-design.sharampura.workers.dev/"   # change to your own domain later, e.g. https://trendfinds.com/
+baseURL = "https://www.nextcartshop.workers.dev/"   # change to your own domain later
 locale = "en-US"
 title = "NextCart"
 enableRobotsTXT = true
