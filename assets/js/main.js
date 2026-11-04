@@ -11,14 +11,14 @@
     });
   }
 
-  // Slideshow: each photo zooms out for 4 seconds, then the next slide slides in
+  // Slideshow: each photo zooms out for 6 seconds, then the next slide slides in
   var root = document.querySelector('[data-carousel]');
   if (!root) return;
   var slides = Array.prototype.slice.call(root.querySelectorAll('.slide'));
   var tabs = Array.prototype.slice.call(root.querySelectorAll('.hero-tab'));
   if (slides.length < 2) return;
 
-  var INTERVAL = 4000;
+  var INTERVAL = 6000;
   var SLIDE_MS = 800;
   var reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   var current = 0;

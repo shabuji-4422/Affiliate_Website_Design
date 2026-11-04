@@ -1,40 +1,14 @@
 {{ define "main" }}
 {{- $slides := where hugo.Data.categories "slide" true }}
-{{- $bf := hugo.Data.blackfriday }}
 {{- $posts := (where site.RegularPages "Section" "posts").ByLastmod.Reverse }}
-{{- $total := add (len $slides) (cond (isset $bf "products") 1 0) }}
+{{- $total := len $slides }}
 
 <h1 class="sr-only">{{ site.Title }}: the trending Amazon finds actually worth buying</h1>
 
-<section class="hero" aria-roledescription="carousel" aria-label="Featured deals and categories" data-carousel>
+<section class="hero" aria-roledescription="carousel" aria-label="Featured categories" data-carousel>
   <div class="slides" id="hero-slides" aria-live="off">
-    {{- with $bf.products }}
-    <article class="slide band-bf is-active" id="slide-black-friday" role="tabpanel" aria-roledescription="slide" aria-label="1 of {{ $total }}: Black Friday">
-      <div class="wrap bf-inner">
-        <div class="band-copy bf-copy">
-          <h2 class="band-title">{{ range $i, $l := split $bf.headline "|" }}<span class="line">{{ $l }}{{ if eq $i 0 }}<svg class="glyph" viewBox="0 0 44 14" aria-hidden="true" focusable="false"><path d="M1 7h3M7 7h3M13 7h3M19 7h6" stroke="currentColor" stroke-width="3"/><path d="M24 2.5l5.5 4.5-5.5 4.5" fill="none" stroke="currentColor" stroke-width="3" stroke-linejoin="round"/><path d="M35 7h8" stroke="currentColor" stroke-width="3"/></svg>{{ end }}</span>{{ end }}</h2>
-          <p class="band-sub">{{ $bf.subline }}</p>
-          <a class="pill pill-teal" href="{{ $bf.link | relURL }}">{{ $bf.linkText }}</a>
-          <p class="bf-note">Deal prices change often, so check Amazon for today's price.</p>
-        </div>
-        <ul class="bf-grid">
-          {{- range . }}
-          <li>
-            <a class="bf-item" href="https://www.amazon.com/dp/{{ .asin }}?tag={{ site.Params.amazonTag }}" target="_blank" rel="sponsored nofollow noopener">
-              <span class="bf-visual">{{ with .image }}<img src="{{ . }}" alt="" loading="lazy">{{ else }}{{ partial "icon.html" .icon }}{{ end }}</span>
-              <span class="bf-brand">{{ .brand }}</span>
-              <span class="bf-name">{{ .name }}</span>
-              <span class="bf-cta">Check deal</span>
-            </a>
-          </li>
-          {{- end }}
-        </ul>
-      </div>
-    </article>
-    {{- end }}
-    {{- $offset := cond (isset $bf "products") 1 0 }}
     {{- range $i, $c := $slides }}
-    {{- $n := add $i $offset }}
+    {{- $n := $i }}
     <article class="slide band{{ if eq $n 0 }} is-active{{ end }}" id="slide-{{ $c.key }}" role="tabpanel" aria-roledescription="slide" aria-label="{{ add $n 1 }} of {{ $total }}: {{ $c.name }}"{{ if ne $n 0 }} aria-hidden="true" inert{{ end }}>
       {{ partial "catband.html" (dict "cat" $c "level" "h2" "link" true "first" (eq $n 0)) }}
     </article>
@@ -44,13 +18,8 @@
   <div class="hero-bar">
     <div class="wrap hero-bar-inner">
       <div class="hero-tabs" role="tablist" aria-label="Choose a slide">
-        {{- with $bf.products }}
-        <button class="hero-tab" type="button" role="tab" id="tab-black-friday" aria-controls="slide-black-friday" aria-selected="true" tabindex="0">
-          <span>Black Friday</span><i class="progress" aria-hidden="true"></i>
-        </button>
-        {{- end }}
         {{- range $i, $c := $slides }}
-        {{- $n := add $i $offset }}
+        {{- $n := $i }}
         <button class="hero-tab" type="button" role="tab" id="tab-{{ $c.key }}" aria-controls="slide-{{ $c.key }}" aria-selected="{{ if eq $n 0 }}true{{ else }}false{{ end }}" tabindex="{{ if eq $n 0 }}0{{ else }}-1{{ end }}">
           <span>{{ $c.name }}</span><i class="progress" aria-hidden="true"></i>
         </button>

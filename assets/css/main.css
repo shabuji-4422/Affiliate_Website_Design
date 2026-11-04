@@ -189,7 +189,7 @@ h1, h2, h3 { font-family: var(--sans); }
 .slide.is-leaving { transform: translateX(-100%); z-index: 1; }
 .hero:not(.is-ready) .slide.is-active { transform: none; }
 .is-home .slide .band-panel { padding-top: 132px; padding-bottom: 96px; }
-.slide.is-active .band-photo img { animation: zoom-out calc(var(--interval, 4000ms) + var(--slide-ms, 800ms)) ease-out both; }
+.slide.is-active .band-photo img { animation: zoom-out calc(var(--interval, 6000ms) + var(--slide-ms, 800ms)) ease-out both; }
 .hero.is-holding .slide.is-active .band-photo img { animation-play-state: paused; }
 @keyframes zoom-out { from { transform: scale(1.18); } to { transform: scale(1); } }
 
@@ -214,45 +214,8 @@ h1, h2, h3 { font-family: var(--sans); }
   content: ""; position: absolute; inset: 0; background: var(--teal);
   transform-origin: left center;
 }
-.hero-tab.is-running .progress::after { animation: grow var(--interval, 4000ms) linear both; }
+.hero-tab.is-running .progress::after { animation: grow var(--interval, 6000ms) linear both; }
 @keyframes grow { from { transform: scaleX(0); } to { transform: scaleX(1); } }
-
-/* ---------- Black Friday banner slide ---------- */
-.band-bf { background: var(--ink); color: var(--white); }
-.bf-inner {
-  display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 8fr); gap: 48px; align-items: center;
-  min-height: inherit; padding-top: 124px; padding-bottom: 72px;
-}
-.bf-copy .band-title { color: var(--white); }
-.bf-copy .band-title .line:first-child::after { background: var(--teal); }
-.bf-copy .glyph { color: var(--teal); }
-.bf-copy .band-sub { color: var(--mist); }
-.bf-note { margin: 18px 0 0; font: 400 15px/1.45 var(--serif); color: var(--mist-soft); }
-.bf-grid {
-  list-style: none; margin: 0; padding: 0;
-  display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 12px;
-}
-.bf-item {
-  position: relative; display: flex; flex-direction: column; height: 100%;
-  padding: 14px 14px 12px; border-radius: 18px; background: var(--white);
-  color: var(--ink); text-decoration: none;
-  transition: transform .2s, box-shadow .2s;
-}
-.bf-item::before {
-  content: "Deal"; position: absolute; top: 10px; right: 10px;
-  padding: 4px 8px 3px; border-radius: 999px;
-  background: var(--ink); color: var(--white); font: 700 11px/1 var(--sans);
-}
-.bf-item:hover { transform: translateY(-3px); box-shadow: 0 12px 24px -12px rgba(0, 0, 0, .5); }
-.bf-visual {
-  display: grid; place-items: center; aspect-ratio: 1 / .8; margin-bottom: 10px;
-  border-radius: 12px; background: var(--mist); color: var(--deep); overflow: hidden;
-}
-.bf-visual .icon { width: 44px; height: 44px; }
-.bf-visual img { width: 100%; height: 100%; object-fit: contain; background: #fff; }
-.bf-brand { font: 600 12.5px/1.2 var(--sans); color: var(--deep); }
-.bf-name { margin: 3px 0 10px; font: 700 15px/1.18 var(--sans); }
-.bf-cta { margin-top: auto; font: 700 13.5px/1 var(--sans); color: var(--ink); text-decoration: underline; text-decoration-color: var(--teal); text-decoration-thickness: 2px; text-underline-offset: 3px; }
 
 /* ---------- Section heads ---------- */
 .section-head { max-width: 40rem; margin: 0 0 44px; }
@@ -466,11 +429,6 @@ h1, h2, h3 { font-family: var(--sans); }
   .steps::before { display: none; }
 }
 
-@media (max-width: 1080px) {
-  .bf-inner { grid-template-columns: minmax(0, 1fr); gap: 28px; }
-  .bf-copy { max-width: 34rem; }
-}
-
 /* ---------- Mobile menu ---------- */
 @media (max-width: 900px) {
   .menu-toggle {
@@ -520,13 +478,6 @@ h1, h2, h3 { font-family: var(--sans); }
   .band-icon { display: none; }
 
   .is-home .slide .band-panel { padding-top: 36px; padding-bottom: 76px; }
-  .bf-inner { padding-top: 40px; padding-bottom: 48px; }
-  .bf-grid {
-    display: flex; gap: 10px; overflow-x: auto; scroll-snap-type: x mandatory;
-    margin: 0 calc(-1 * var(--gutter)); padding: 4px var(--gutter) 8px; scrollbar-width: none;
-  }
-  .bf-grid::-webkit-scrollbar { display: none; }
-  .bf-grid > li { flex: 0 0 44%; scroll-snap-align: start; }
   .hero-tab { padding: 18px 12px 15px; font-size: 15px; }
   .hero-tab .progress { left: 12px; right: 12px; }
   .hero-tabs { margin-left: -12px; }
