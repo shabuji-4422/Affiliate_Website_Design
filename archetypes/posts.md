@@ -20,7 +20,7 @@ Intro paragraph: who this post is for and what they'll get.
 
 ### Product Name
 
-{{</* product name="Product Name" asin="B0XXXXXXXX" badge="Best Overall" pros="Pro one|Pro two" cons="Con one" */>}}
+{{</* product name="Product Name" link="https://amzn.to/your-affiliate-link" badge="Best Overall" pros="Pro one|Pro two" cons="Con one" */>}}
 Your own description of the product.
 {{</* /product */>}}
 

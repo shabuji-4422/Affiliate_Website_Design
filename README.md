@@ -41,6 +41,12 @@ Brand colors live at the top of `assets/css/main.css`.
 
 Amazon only allows affiliates to show product images that come from its **Creators API** (the replacement for PA-API). Copying, screenshotting or hotlinking images from Amazon product pages breaks the Associates agreement and can get the account closed. Once your account has API access (final approval plus 10 qualifying sales in the last 30 days), add the image URL the API returns as `image="..."` on a product card and it will show on a white background.
 
+Every product card has a square photo box beside the product. To fill it, upload a photo to
+`assets/products/` on GitHub (**Add file → Upload files**) named after the product's ASIN, for example
+`B08HV3MPFD.jpg`, or after the product name in lowercase with dashes, for example
+`phomemo-bluetooth-label-maker.jpg`. The site finds it, resizes it and shows the whole product on white.
+Until a photo is added, the box stays empty.
+
 ## 4. Add a new post
 
 **Easiest (in the browser):** on GitHub, open `content/posts/`, click **Add file → Create new file**, name it `your-post-slug.md`, paste the template from `archetypes/posts.md`, fill it in, and commit. Remove `draft: true` when it's ready to go live.

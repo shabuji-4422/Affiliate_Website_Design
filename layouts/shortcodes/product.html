@@ -1,31 +1,79 @@
 {{- /*
   Product card. Usage in a post:
 
-  {{< product name="Product Name" asin="B0XXXXXXX" badge="Best Overall" pros="Pro one|Pro two" cons="Con one" image="/images/product.jpg" >}}
+  {{< product name="Product Name" asin="B0XXXXXXXX" badge="Best Overall" pros="Pro one|Pro two" cons="Con one" >}}
   Your own description of the product, in Markdown.
   {{< /product >}}
 
-  - asin:   the 10-character code from the Amazon product URL (amazon.com/dp/ASIN). Preferred.
-  - search: use instead of asin to link to an Amazon search (e.g. search="lego botanical set").
-  - image:  optional. Use your OWN photo or screenshot saved in /static/images. Never copy Amazon's images.
+  Link (pick one):
+  - link:   your full Amazon affiliate link, used exactly as given (e.g. https://amzn.to/xxxx)
+  - asin:   the 10-character code from the Amazon URL (amazon.com/dp/ASIN); the site adds your tag
+  - search: links to an Amazon search instead (e.g. search="lego botanical set")
+
+  Photo (every card has a photo box beside the product):
+  - Upload a photo to assets/products/ named after the ASIN, e.g. assets/products/B08HV3MPFD.jpg,
+    or named after the product, e.g. assets/products/phomemo-bluetooth-label-maker.jpg
+    (lowercase, spaces become dashes). jpg, jpeg, png and webp all work.
+  - Or set image="..." to a file path or an image URL.
+  - With no photo, the box stays empty until you add one.
+  Only use photos you're allowed to use (your own, or from Amazon's Creators API).
 */ -}}
+{{- $name := .Get "name" -}}
 {{- $tag := site.Params.amazonTag -}}
 {{- $url := "" -}}
-{{- with .Get "asin" -}}
-  {{- $url = printf "https://www.amazon.com/dp/%s?tag=%s" . $tag -}}
+{{- with .Get "link" -}}
+  {{- $url = . -}}
 {{- else -}}
-  {{- with $.Get "search" -}}
-    {{- $url = printf "https://www.amazon.com/s?k=%s&tag=%s" (urlquery .) $tag -}}
+  {{- with $.Get "asin" -}}
+    {{- $url = printf "https://www.amazon.com/dp/%s?tag=%s" . $tag -}}
+  {{- else -}}
+    {{- with $.Get "search" -}}
+      {{- $url = printf "https://www.amazon.com/s?k=%s&tag=%s" (urlquery .) $tag -}}
+    {{- end -}}
   {{- end -}}
 {{- end -}}
+
+{{- /* find the photo */ -}}
+{{- $src := "" -}}
+{{- $img := false -}}
+{{- with .Get "image" -}}
+  {{- if or (hasPrefix . "http") (hasPrefix . "//") -}}
+    {{- $src = . -}}
+  {{- else -}}
+    {{- with resources.Get (strings.TrimPrefix "/" .) -}}{{ $img = . }}{{- else -}}{{ $src = $.Get "image" | relURL }}{{- end -}}
+  {{- end -}}
+{{- end -}}
+{{- if and (not $src) (not $img) -}}
+  {{- $keys := slice -}}
+  {{- with .Get "asin" }}{{ $keys = $keys | append . }}{{ end -}}
+  {{- with $name }}{{ $keys = $keys | append (urlize .) }}{{ end -}}
+  {{- range $k := $keys -}}
+    {{- range $ext := slice "jpg" "jpeg" "png" "webp" "JPG" "JPEG" "PNG" -}}
+      {{- if not $img -}}
+        {{- with resources.Get (printf "products/%s.%s" $k $ext) -}}{{ $img = . }}{{- end -}}
+      {{- end -}}
+    {{- end -}}
+  {{- end -}}
+{{- end -}}
+{{- if $img -}}
+  {{- $fit := $img.Fit "640x640 webp q82" -}}
+  {{- $src = $fit.RelPermalink -}}
+{{- end -}}
+
 <div class="product">
   {{- with .Get "badge" }}<span class="product-badge">{{ . }}</span>{{ end }}
   <div class="product-grid">
-    {{- with .Get "image" }}
-    <img class="product-img" src="{{ . | relURL }}" alt="{{ $.Get "name" }}" loading="lazy" width="220" height="220">
-    {{- end }}
+    <figure class="product-photo{{ if not $src }} is-empty{{ end }}">
+      {{- if $src }}
+      {{- if $url }}<a href="{{ $url }}" target="_blank" rel="sponsored nofollow noopener" tabindex="-1">{{ end -}}
+      <img src="{{ $src }}" alt="{{ $name }}" loading="lazy" decoding="async" width="640" height="640">
+      {{- if $url }}</a>{{ end -}}
+      {{- else }}
+      <svg viewBox="0 0 48 48" width="48" height="48" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="6" y="9" width="36" height="30" rx="5"/><circle cx="17" cy="19" r="3.5"/><path d="M6 33l10-9 8 7 6-5 12 10"/></svg>
+      {{- end }}
+    </figure>
     <div class="product-main">
-      <p class="product-name">{{ .Get "name" }}</p>
+      <p class="product-name">{{ $name }}</p>
       <div class="product-desc">{{ .Inner | .Page.RenderString (dict "display" "block") }}</div>
       {{- if or (.Get "pros") (.Get "cons") }}
       <div class="proscons">
